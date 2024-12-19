@@ -1,0 +1,37 @@
+﻿@model Announcment
+
+<h2>Dodaj ogłoszenie</h2>
+
+<form asp-action="AddAnnouncment" method="post">
+    <div class="form-group">
+        <label for="Name">Nazwa</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Description">Opis</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Price">Cena</label>
+        <input asp-for="Price" type="number" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Category">Kategoria</label>
+        <input asp-for="Category" class="form-control" />
+        <span asp-validation-for="Category" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="Verified">Zweryfikowane</label>
+        <input asp-for="Verified" type="checkbox" />
+        <span asp-validation-for="Verified" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Dodaj</button>
+</form>

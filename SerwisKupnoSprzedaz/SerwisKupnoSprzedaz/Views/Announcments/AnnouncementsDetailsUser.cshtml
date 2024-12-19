@@ -1,0 +1,20 @@
+﻿@model Announcment
+
+@{
+    ViewData["Title"] = "Szczegóły ogłoszenia";
+}
+
+<h1>Szczegóły ogłoszenia</h1>
+
+<div>
+    <h3>@Model.Name</h3>
+    <p><strong>Opis:</strong> @Model.Description</p>
+    <p><strong>Kategoria:</strong> @Model.Category</p>
+    <p><strong>Cena:</strong> @Model.Price PLN</p>
+    <p><strong>Zweryfikowane:</strong> @(Model.Verified ? "Tak" : "Nie")</p>
+</div>
+
+<form method="post" action="/Orders/Create">
+    <input type="hidden" name="announcementId" value="@Model.Id" />
+    <button type="submit" class="btn btn-primary">Zamów</button>
+</form>

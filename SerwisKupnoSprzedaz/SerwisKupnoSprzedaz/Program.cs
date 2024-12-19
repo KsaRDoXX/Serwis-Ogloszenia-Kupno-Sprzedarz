@@ -1,7 +1,25 @@
+using SerwisKupnoSprzedaz.Data;
+using Microsoft.EntityFrameworkCore;
+using SerwisKupnoSprzedaz.Services;
+using System;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+var connectionString = builder.Configuration.GetConnectionString("MySqlConn");
+
+builder.Services.AddRazorPages();
+builder.Services.AddDbContext<AppDBContext>(
+    options =>
+    {
+        options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)).UseLazyLoadingProxies();
+    });
+    
+  
+//builder.Services.AddScoped<IUserService, UserService>();
+//builder.Services.AddScoped<IAnnouncmentServcie, AnnouncmentService>();
 
 var app = builder.Build();
 

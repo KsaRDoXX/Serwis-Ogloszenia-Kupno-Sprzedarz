@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Announcment>
+
+<h2>Zarządzaj ogłoszeniami</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nazwa</th>
+            <th>Opis</th>
+            <th>Cena</th>
+            <th>Kategoria</th>
+            <th>Zweryfikowane</th>
+            <th>Autor</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var announcement in Model)
+        {
+            <tr>
+                <td>@announcement.Id</td>
+                <td>@announcement.Name</td>
+                <td>@announcement.Description</td>
+                <td>@announcement.Price</td>
+                <td>@announcement.Category</td>
+                <td>@(announcement.Verified ? "Tak" : "Nie")</td>
+                <td>@(announcement.User.UserName)</td>
+                <td>
+                    <a asp-controller="Admin" asp-action="EditAnnouncement" asp-route-id="@announcement.Id" class="btn btn-primary">Edytuj</a>
+                    <a asp-controller="Admin" asp-action="DeleteAnnouncement" asp-route-id="@announcement.Id" class="btn btn-danger">Usuń</a>
+                    @if (!announcement.Verified)
+                    {
+                        <a asp-controller="Admin" asp-action="VerifyAnnouncement" asp-route-id="@announcement.Id" class="btn btn-success">Weryfikuj</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

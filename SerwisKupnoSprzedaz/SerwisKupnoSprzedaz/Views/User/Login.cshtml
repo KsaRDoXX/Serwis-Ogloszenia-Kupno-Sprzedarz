@@ -1,0 +1,36 @@
+﻿@*
+
+*@
+
+@{
+    ViewData["Title"] = "Logowanie";
+    
+}
+
+@{
+     @ViewBag.Username;
+
+    <form method="post" enctype="multipart/form-data" asp-controller="User" asp-action="Login">
+        <div class="form-group">
+            <label for="loginInput">Login</label>
+            <input type="text" class="form-control" id="loginInput" name="login" aria-describedby="login" placeholder="Wpisz Login">
+        </div>
+        <div class="form-group">
+            <label for="PasswordInput">Password</label>
+            <input type="password" name="password" class="form-control" id="PasswordInput" placeholder="Hasło">
+            <small id="PasswordInput" class="form-text text-muted">Nigdy nie podawaj nikomu swojego hasła</small>
+        </div>
+        <br />
+        
+        <button type="submit" class="btn btn-primary">Wyślij</button>
+        
+        <br /><br />
+        
+        <small id="RegisterButton" class="form-text text-muted">
+            <b> Nie masz konta?
+                <a href="@Url.Action("Register", "User")">Zarejestruj się</a>
+            </b>
+        </small>
+
+    </form>
+}

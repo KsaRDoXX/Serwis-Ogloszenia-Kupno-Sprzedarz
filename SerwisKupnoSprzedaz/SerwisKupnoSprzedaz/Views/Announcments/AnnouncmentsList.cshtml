@@ -1,0 +1,40 @@
+﻿@*
+
+*@
+@{
+
+}
+
+<h1>Lista ogłoszeń</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nazwa</th>
+            <th>Opis</th>
+            <th>Cena</th>
+            <th>Kategoria</th>
+            <th>Verified</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        
+            <tr onclick="location.href='/Announc    ments/Details/@item.Id';" style="cursor: pointer;">
+        
+   
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>@item.Price</td>
+                <td>@item.Category</td>
+                <td>@(item.Verified ? "Yes" : "No")</td>
+
+            </tr>
+
+            
+        }
+    </tbody>
+</table>
