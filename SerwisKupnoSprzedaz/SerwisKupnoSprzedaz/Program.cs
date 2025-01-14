@@ -30,15 +30,12 @@ builder.Services.AddControllersWithViews(options =>
     options.Filters.Add<SessionCheckFilter>(); // Rejestracja filtra globalnie
 });
 
-
 builder.Services.AddHttpContextAccessor();
 
 //builder.Services.AddScoped<IUserService, UserService>();
 //builder.Services.AddScoped<IAnnouncmentServcie, AnnouncmentService>();
 
 var app = builder.Build();
-
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

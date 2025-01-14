@@ -16,6 +16,7 @@
         </tr>
     </thead>
     <tbody>
+
         @foreach (var announcement in Model)
         {
             <tr>
@@ -27,7 +28,6 @@
                 <td>@(announcement.Verified ? "Tak" : "Nie")</td>
                 <td>@(announcement.User.UserName)</td>
 
-
                 <td>
                     <form asp-controller="Announcments" asp-action="Delete" asp-route-id="@announcement.Id" method="post" class="d-inline">
                         @Html.AntiForgeryToken()
@@ -38,13 +38,14 @@
                         @Html.AntiForgeryToken()
                         <button type="submit" class="btn btn-danger">Edytuj</button>
                     </form>
-            @if (!announcement.Verified)
-                {
-                  <form asp-controller="Announcments" asp-action="Verify" asp-route-id="@announcement.Id" method="post" class="d-inline">
+
+                  @if (!announcement.Verified)
+                  {
+                    <form asp-controller="Announcments" asp-action="Verify" asp-route-id="@announcement.Id" method="post" class="d-inline">
                        @Html.AntiForgeryToken()
                        <button type="submit" class="btn btn-danger">Weryfikuj (ID = @announcement.Id)</button>
-                   </form>
-                }
+                    </form>
+                  }
     
                 </td>
             </tr>

@@ -48,8 +48,5 @@ namespace SerwisKupnoSprzedaz.Data
                 .HasForeignKey(a => a.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
-
-        //others ? 
-
     }
 }

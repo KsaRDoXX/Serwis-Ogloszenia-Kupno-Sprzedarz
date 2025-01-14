@@ -9,7 +9,6 @@ namespace SerwisKupnoSprzedaz.Models
         public int Id { get; set; }
         [Required(ErrorMessage ="Wymagana nazwa")]
         [MaxLength(100)]
-
         public string Name { get; set; }
         [Required(ErrorMessage ="Opis Wymagany")]
         public string Description { get; set; }

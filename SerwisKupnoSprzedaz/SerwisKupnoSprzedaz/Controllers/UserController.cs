@@ -64,7 +64,6 @@ namespace SerwisKupnoSprzedaz.Controllers
 
         //Funkcja rejestrująca podane dane użytkownika
         [AllowAnonymous]
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Register(User model)

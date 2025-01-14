@@ -17,17 +17,16 @@ namespace SerwisKupnoSprzedaz.Controllers
         }
         
         //Przekierowanie do formularza tworzenia
-  
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddOrder(int id) // Oczekujemy "id" zgodnie z asp-route-id w formularzu
+        public IActionResult AddOrder(int id) 
         {
             var order = new Order
             {
-                AnnouncementId = id // Przypisujemy przekazane ID ogłoszenia
+                AnnouncementId = id 
             };
 
-            return View(order); // Przekazujemy model do widoku
+            return View(order); 
         }
 
         [HttpPost]

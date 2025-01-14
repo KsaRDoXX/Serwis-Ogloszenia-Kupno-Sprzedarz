@@ -3,16 +3,16 @@
 public class Order
 {
     public int Id { get; set; } // Klucz główny
-    public string? OrderState { get; set; } // Stan zamówienia
-    public string OrderAdress { get; set; } // Adres zamówienia
-    public string DeliveryType { get; set; } // Typ dostawy
-    public DateTime? OrderDate { get; set; } // Data zamówienia (nullable)
+    public string? OrderState { get; set; } 
+    public string OrderAdress { get; set; } 
+    public string DeliveryType { get; set; } 
+    public DateTime? OrderDate { get; set; } 
 
     // Relacja z użytkownikiem
     public int UserId { get; set; } // Klucz obcy do tabeli User
-    public virtual User? User { get; set; } // Nawigacyjna właściwość do użytkownika
+    public virtual User? User { get; set; } 
 
     // Relacja z ogłoszeniem
-    public int AnnouncementId { get; set; } // Klucz obcy do tabeli Announcement
-    public virtual Announcment? Announcement { get; set; } // Nawigacyjna właściwość do ogłoszenia
+    public int AnnouncementId { get; set; } // Klucz obcy do tabeli ogłoszenia
+    public virtual Announcment? Announcement { get; set; } 
 }
