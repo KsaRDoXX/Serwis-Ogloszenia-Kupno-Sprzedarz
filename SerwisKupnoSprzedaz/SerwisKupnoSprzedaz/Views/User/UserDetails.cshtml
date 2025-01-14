@@ -1,0 +1,27 @@
+﻿@model User
+
+@{
+    ViewData["Title"] = "Twoje Dane";
+}
+
+<div>
+    <h3>Twoje Dane</h3>
+    <p><strong>Nazwa:</strong> @Model.UserName</p>
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p><strong>Administrator :</strong> @(Model.IsAdmin ? "Tak" : "Nie")</p>
+</div>
+
+<form asp-controller="User" asp-action="Edit" class="d-inline" asp-route-id="@Model.Id">
+    @Html.AntiForgeryToken()
+    <button type="submit" formmethod="post" class="btn btn-danger">Edytuj</button>
+</form>
+
+<form asp-controller="User" asp-action="Orders" asp-route-id="@Model.Id" class="d-inline">
+    <button type="submit" class="btn btn-primary">Twoje Zamówienia</button>
+</form>
+
+<form asp-controller="User" asp-action="Announcements" asp-route-id="@Model.Id" class="d-inline">
+    <button type="submit" class="btn btn-primary">Twoje Ogłoszenia</button>
+</form>
+
+

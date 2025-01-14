@@ -14,7 +14,9 @@
     <p><strong>Zweryfikowane:</strong> @(Model.Verified ? "Tak" : "Nie")</p>
 </div>
 
-<form method="post" action="/Orders/Create">
-    <input type="hidden" name="announcementId" value="@Model.Id" />
-    <button type="submit" class="btn btn-primary">Zamów</button>
+
+<form asp-controller="Order" asp-action="AddOrder" asp-route-id="@Model.Id" method="post" class="d-inline">
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-danger">Zamów</button>
 </form>
+

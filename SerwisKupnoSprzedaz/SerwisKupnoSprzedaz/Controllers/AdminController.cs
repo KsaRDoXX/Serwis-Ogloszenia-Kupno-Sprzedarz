@@ -22,7 +22,6 @@ namespace SerwisKupnoSprzedaz.Controllers
             var Announcements = _dbContext.Announcments.ToList();
             return View(Announcements);
         }
-
         
         public IActionResult ManageUsers()
         {
@@ -35,9 +34,5 @@ namespace SerwisKupnoSprzedaz.Controllers
             var Orders = _dbContext.Orders.ToList();
             return View(Orders);
         }
-
-
     }
-
-
 }

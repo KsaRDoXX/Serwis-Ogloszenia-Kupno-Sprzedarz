@@ -3,8 +3,6 @@
     public interface IAnnouncmentsService
     {
         public bool isAnnouncmentValid();
-        
-
 
     }
 }

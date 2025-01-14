@@ -1,6 +1,11 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+
+
+    
+    
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SerwisKupnoSprzedaz</title>
@@ -9,6 +14,16 @@
     <link rel="stylesheet" href="~/SerwisKupnoSprzedaz.styles.css" asp-append-version="true" />
 </head>
 <body>
+
+
+    @{
+        var isLoggedIn = Context.Items["IsLoggedIn"] as bool? ?? false;
+        var isAdmin = Context.Items["IsAdmin"] as bool? ?? false;
+        var userName = Context.Items["UserName"] as string;
+        var userId = Context.Items["UserId"];
+    }
+
+
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -22,30 +37,63 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Announcments" asp-action="Create">Announcment</a>
 
-                        </li>
+                        
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Announcments" asp-action="AddAnnouncment">Dodaj Ogloszenie</a>
-
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Autorzy</a>
                         </li>
+                   
+                       
+                        @if (isLoggedIn )
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Announcments" asp-action="AddAnnouncment">Dodaj Ogloszenie</a>
 
-                        <li><a asp-controller="Admin" asp-action="Dashboard">Panel Administracyjny</a></li>
+                            </li>
+
+                            if(isAdmin)
+                            {
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="DashBoard">PanelAdministracyjny </a>
+                            </li>
+
+                            }
+                        }
+                       
 
 
                     </ul>
-    
+
+
+                    @if (isLoggedIn)
+                    {
+                        <form asp-controller="User" asp-action="Details" asp-route-id="@userId" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-danger">@userName</button>
+                        </form>
+
+                        <ul class="navbar-nav flex-grow-0">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Logout">Wylogu</a>
+
+                        </ul>
+
+                    }
+                    else
+                    {
+
+                        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Zaloguj</a>
+
+                     
+
+                    }
+                   
                     <ul class="navbar-nav flex-grow-0">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Login">Login</a>
 
-                        </li>
-                    </ul>
                     
+
+                    </ul>
+                 
                 </div>
             </div>
         </nav>
@@ -63,11 +111,16 @@
             &copy; 2024 - SerwisKupnoSprzedaz - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 
+
+
 </body>
+
+
 </html>

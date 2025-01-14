@@ -1,10 +1,10 @@
 ﻿@model Announcment
 
+<h2>Edytuj ogłoszenie</h2>
 
+<form asp-controller="Announcments" asp-action="SaveEdit" method="post">
+    <input type="hidden" asp-for="Id" />
 
-<h2>Dodaj ogłoszenie</h2>
-
-<form asp-action="AddAnnouncment" method="post">
     <div class="form-group">
         <label for="Name">Nazwa</label>
         <input asp-for="Name" class="form-control" />
@@ -29,7 +29,11 @@
         <span asp-validation-for="Category" class="text-danger"></span>
     </div>
 
+    <div class="form-group">
+        <label for="Verified">Zweryfikowane</label>
+        <input asp-for="Verified" type="checkbox" />
+        <span asp-validation-for="Verified" class="text-danger"></span>
+    </div>
 
-    <button type="submit" class="btn btn-primary">Dodaj</button>
-
+    <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
 </form>

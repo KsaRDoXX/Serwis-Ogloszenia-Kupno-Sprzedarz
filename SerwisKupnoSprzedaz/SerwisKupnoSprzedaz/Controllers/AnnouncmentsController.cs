@@ -21,40 +21,91 @@ namespace SerwisKupnoSprzedaz.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var announcments = _dbContext.Announcments.ToList();
+            return View(announcments);
         }
 
-        public IActionResult Create()
+        public IActionResult Edit(int id)
         {
-            return View("AddAnnouncment");            
+            var announcement = _dbContext.Announcments.FirstOrDefault(a => a.Id == id);
+
+            if (announcement == null)
+            {
+                return NotFound();
+            }
+
+            return View("EditAnnouncment", announcement);
         }
 
-        public IActionResult Edit(int ID)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SaveEdit(Announcment model)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                var existingAnnouncement = _dbContext.Announcments.FirstOrDefault(a => a.Id == model.Id);
+
+                if (existingAnnouncement == null)
+                {
+                    return NotFound();
+                }
+
+                existingAnnouncement.Name = model.Name;
+                existingAnnouncement.Description = model.Description;
+                existingAnnouncement.Price = model.Price;
+                existingAnnouncement.Category = model.Category;
+                existingAnnouncement.Verified = model.Verified;
+
+                _dbContext.SaveChanges();
+
+                return RedirectToAction("AnnouncmentsList"); 
+            }
+
+            return View("EditAnnouncment", model);
         }
 
+
+        //Przekierowanie do widoku dodawania
         [HttpGet]
         public IActionResult AddAnnouncment()
         {          
             return View();
         }
 
+        //Funkcja dodająca ogłoszenie do bazy
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddAnnouncment(Announcment model)
         {
+            model.Verified=false;
             if (ModelState.IsValid)
             {
-                // Dodaj ogłoszenie do bazy danych
+                //Id zalogowanego uzytkownika
+                var userIdString = HttpContext.Session.GetString("UserId");
+
+                int.TryParse(userIdString, out int userId);
+               
+                model.UserId = userId;
+
                 _dbContext.Announcments.Add(model);
                 _dbContext.SaveChanges();
 
-                // Przekierowanie po zapisaniu
                 return RedirectToAction("AnnouncmentsList");
+
+            }
+            else
+            {
+                //Informacje o potencjalnych błędach
+                Console.WriteLine(ModelState.ErrorCount);
+
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    Console.WriteLine($"ModelState Error: {error.ErrorMessage}");
+                }
+
+                return View(model);
             }
                 
-            return View(model);
         }
 
         public IActionResult Details(int id)
@@ -82,31 +133,47 @@ namespace SerwisKupnoSprzedaz.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(int announcementId)
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
         {
-            var announcement = _dbContext.Announcments.FirstOrDefault(a => a.Id == announcementId);
-            if (announcement != null)
+            var announcement = _dbContext.Announcments.Find(id);
+            if (announcement == null)
             {
-                _dbContext.Announcments.Remove(announcement);
-                _dbContext.SaveChanges();
+                return NotFound();
             }
 
-            return RedirectToAction("Index");
+            _dbContext.Announcments.Remove(announcement);
+            _dbContext.SaveChanges();
+
+            // Pobranie adresu URL poprzedniej strony z nagłówka Referer
+            var refererUrl = Request.Headers["Referer"].ToString();
+
+            // Jeśli nagłówek Referer jest dostępny, przekieruj do poprzedniej strony, w przeciwnym razie do widoku domyślnego
+            if (!string.IsNullOrEmpty(refererUrl))
+            {
+                return Redirect(refererUrl);
+            }
+
+            // Jeśli nie ma nagłówka Referer, przekieruj na stronę główną lub jakąkolwiek inną stronę
+            return RedirectToAction("Index", "Home");
         }
 
+
         [HttpPost]
-        public IActionResult Verify(int announcementId)
+        [ValidateAntiForgeryToken]
+        public IActionResult Verify(int id)  
         {
-            var announcement = _dbContext.Announcments.FirstOrDefault(a => a.Id == announcementId);
+            Console.WriteLine("ID = " + id);
+
+            var announcement = _dbContext.Announcments.FirstOrDefault(a => a.Id == id);
             if (announcement != null)
             {
                 announcement.Verified = true;
                 _dbContext.SaveChanges();
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("ManageAnnouncements", "Admin");
         }
-
 
 
     }

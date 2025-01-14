@@ -1,36 +1,29 @@
-﻿@*
+﻿@model UserLoginModel
 
-*@
+<form asp-action="Login" method="post">
+    <div class="form-group">
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" class="form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
+    </div>
 
-@{
-    ViewData["Title"] = "Logowanie";
-    
-}
+    <div class="form-group">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" type="password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
 
-@{
-     @ViewBag.Username;
+    <button type="submit" class="btn btn-primary">Zaloguj</button>
 
-    <form method="post" enctype="multipart/form-data" asp-controller="User" asp-action="Login">
-        <div class="form-group">
-            <label for="loginInput">Login</label>
-            <input type="text" class="form-control" id="loginInput" name="login" aria-describedby="login" placeholder="Wpisz Login">
-        </div>
-        <div class="form-group">
-            <label for="PasswordInput">Password</label>
-            <input type="password" name="password" class="form-control" id="PasswordInput" placeholder="Hasło">
-            <small id="PasswordInput" class="form-text text-muted">Nigdy nie podawaj nikomu swojego hasła</small>
-        </div>
-        <br />
-        
-        <button type="submit" class="btn btn-primary">Wyślij</button>
-        
-        <br /><br />
-        
-        <small id="RegisterButton" class="form-text text-muted">
-            <b> Nie masz konta?
-                <a href="@Url.Action("Register", "User")">Zarejestruj się</a>
-            </b>
-        </small>
 
-    </form>
+</form>
+
+<form asp-controller="User" asp-action="Register" class="d-inline">
+    @Html.AntiForgeryToken()
+    <button type="submit" formmethod="post" class="btn btn-danger">Zarejestruj</button>
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }

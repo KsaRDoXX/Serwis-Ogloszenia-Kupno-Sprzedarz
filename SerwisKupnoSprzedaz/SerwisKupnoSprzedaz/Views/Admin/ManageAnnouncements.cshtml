@@ -26,13 +26,26 @@
                 <td>@announcement.Category</td>
                 <td>@(announcement.Verified ? "Tak" : "Nie")</td>
                 <td>@(announcement.User.UserName)</td>
+
+
                 <td>
-                    <a asp-controller="Admin" asp-action="EditAnnouncement" asp-route-id="@announcement.Id" class="btn btn-primary">Edytuj</a>
-                    <a asp-controller="Admin" asp-action="DeleteAnnouncement" asp-route-id="@announcement.Id" class="btn btn-danger">Usuń</a>
-                    @if (!announcement.Verified)
-                    {
-                        <a asp-controller="Admin" asp-action="VerifyAnnouncement" asp-route-id="@announcement.Id" class="btn btn-success">Weryfikuj</a>
-                    }
+                    <form asp-controller="Announcments" asp-action="Delete" asp-route-id="@announcement.Id" method="post" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć to ogłoszenie?');">Usuń</button>
+                    </form>
+
+                    <form asp-controller="Announcments" asp-action="Edit" asp-route-id="@announcement.Id" method="post" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger">Edytuj</button>
+                    </form>
+            @if (!announcement.Verified)
+                {
+                  <form asp-controller="Announcments" asp-action="Verify" asp-route-id="@announcement.Id" method="post" class="d-inline">
+                       @Html.AntiForgeryToken()
+                       <button type="submit" class="btn btn-danger">Weryfikuj (ID = @announcement.Id)</button>
+                   </form>
+                }
+    
                 </td>
             </tr>
         }

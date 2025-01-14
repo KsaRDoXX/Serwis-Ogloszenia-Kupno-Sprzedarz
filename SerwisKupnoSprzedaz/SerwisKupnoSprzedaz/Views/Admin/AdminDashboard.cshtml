@@ -1,7 +1,37 @@
-﻿<h1>Panel Administracyjny</h1>
-<ul>
+﻿@{
+    ViewData["Title"] = "Panel Administracyjny";
+}
 
-    <li><a asp-controller="Admin" asp-action="ManageAnnouncements">Zarządzaj Ogłoszeniami</a></li>
-    <li><a asp-controller="Admin" asp-action="ManageUsers">Zarządzaj Użytkownikami</a></li>
-    <li><a asp-controller="Admin" asp-action="ManageOrders">Zarządzaj Zamówieniami</a></li>
-</ul>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Panel Administracyjny</h1>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Zarządzaj Ogłoszeniami</h5>
+                    <p class="card-text">Przeglądaj i edytuj dostępne ogłoszenia w serwisie.</p>
+                    <a asp-controller="Admin" asp-action="ManageAnnouncements" class="btn btn-primary">Przejdź</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Zarządzaj Użytkownikami</h5>
+                    <p class="card-text">Zarządzaj kontami użytkowników i ich uprawnieniami.</p>
+                    <a asp-controller="Admin" asp-action="ManageUsers" class="btn btn-primary">Przejdź</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Zarządzaj Zamówieniami</h5>
+                    <p class="card-text">Monitoruj i zarządzaj zamówieniami użytkowników.</p>
+                    <a asp-controller="Admin" asp-action="ManageOrders" class="btn btn-primary">Przejdź</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

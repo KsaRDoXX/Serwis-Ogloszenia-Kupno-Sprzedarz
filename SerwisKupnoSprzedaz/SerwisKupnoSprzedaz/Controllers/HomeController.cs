@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SerwisKupnoSprzedaz.Data;
 using SerwisKupnoSprzedaz.Models;
 using System.Diagnostics;
 
@@ -8,14 +9,24 @@ namespace SerwisKupnoSprzedaz.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+          private readonly AppDBContext _dbContext;
+
+   
+        public HomeController(ILogger<HomeController> logger, AppDBContext context)
         {
             _logger = logger;
+            _dbContext = context;
         }
 
+        //Inicjalizacja widoku g³ównego
         public IActionResult Index()
         {
-            return View();
+            var userName = HttpContext.Session.GetString("UserName");
+
+            // Przekazanie nazwy u¿ytkownika do layoutu
+            ViewBag.UserName = userName;
+            var announcements = _dbContext.Announcments.ToList();
+            return View(announcements);
         }
 
         public IActionResult Privacy()

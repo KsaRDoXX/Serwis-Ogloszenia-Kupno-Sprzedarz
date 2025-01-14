@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Announcment>
+
+@{
+    ViewData["Title"] = "Twoje Ogłoszenia";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Twoje Ogłoszenia</h1>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">
+            <strong>Brak ogłoszeń.</strong> Dodaj nowe ogłoszenia, aby je zobaczyć na liście.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered shadow-sm">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nazwa</th>
+                        <th>Opis</th>
+                        <th>Cena</th>
+                        <th>Kategoria</th>
+                        <th>Zweryfikowane</th>
+                        <th>Akcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var announcment in Model)
+                    {
+                        <tr>
+                            <td>@announcment.Id</td>
+                            <td>@announcment.Name</td>
+                            <td>@announcment.Description</td>
+                            <td>@announcment.Price.ToString("C")</td>
+                            <td>@announcment.Category</td>
+                            <td>@(announcment.Verified ? "Tak" : "Nie")</td>
+                            <td>
+                  
+                                <form asp-controller="Announcments" asp-action="Delete" asp-route-id="@announcment.Id" method="post" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć to ogłoszenie?');">Usuń</button>
+                    </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

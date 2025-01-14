@@ -1,32 +1,29 @@
-﻿@*
+﻿@model User
 
-*@
-@{
-    ViewData["Title"] = "Rejestracja";
-}
+<h2>Zarejestruj się</h2>
 
-<form method="post" asp-controller="User" asp-action="Login">
+<form asp-action="Register" method="post">
     <div class="form-group">
-        <label for="loginInput">Login</label>
-        <input type="text" name="login" class="form-control" id="loginInput" aria-describedby="login" placeholder="Wpisz Login">
-    </div>
-    <div class="form-group">
-        <label for="PasswordInput">Hasło</label>
-        <input type="password" name="password" class="form-control" id="PasswordInput" placeholder="Hasło">
-        <small id="PasswordInput" class="form-text text-muted">Nigdy nie podawaj nikomu swojego hasła</small>
-    </div>
-    <div class="form-group">
-        <label for="PasswordInput2">Powtórz hasło</label>
-        <input type="password" name="password2" class="form-control" id="PasswordInput2" placeholder="Powtórz Hasło">
-    </div>
-    <br />
-    <div class="form-group">
-        <label for="AdressInput">Podaj adres</label>
-        <input type="text" class="form-control" name="adress" id="AdressInput" placeholder="Adres">
-        <small id="AdressInput" class="form-text text-muted">Domyślny adres do wysyłki</small>
+        <label for="UserName">Nazwa użytkownika</label>
+        <input type="text" asp-for="UserName" class="form-control" />
+        <span asp-validation-for="UserName" class="text-danger"></span>
     </div>
 
-    <br />
-    <button type="submit" class="btn btn-primary">Wyślij</button>
+    <div class="form-group">
+        <label for="Email">Adres Email</label>
+        <input type="text" asp-for="Email" class="form-control"></input>
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
 
+     <<div class="form-group">
+        <label for="PasswordHash"> Hasło </label>
+        <input type="password" asp-for="PasswordHash" class="form-control"></input>
+        <span asp-validation-for="PasswordHash" class="text-danger"></span>
+    </div>
+
+    <form asp-controller="User" asp-action="Register" asp-route-id="@User" method="post" class="d-inline">
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-primary">Zarejestruj</button>
+    </form>
 </form>
+

@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Order>
+
+@{
+    ViewData["Title"] = "Twoje Zamówienia";
+}
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Message"]
+    </div>
+}
+
+<h3>Twoje Zamówienia</h3>
+
+@if (!Model.Any())
+{
+    <p>Nie masz żadnych zamówień.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Stan Zamówienia</th>
+                <th>Adres</th>
+                <th>Typ Dostawy</th>
+                <th>Data Zamówienia</th>
+                <th>Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr onclick="location.href='@Url.Action("OrderDetails", "Order", new { id = order.Id })'" style="cursor: pointer;">
+                    <td>@order.Id</td>
+                    <td>@order.OrderState</td>
+                    <td>@order.OrderAdress</td>
+                    <td>@order.DeliveryType</td>
+                    <td>@order.OrderDate?.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        <form asp-controller="Order" asp-action="Delete" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@order.Id" />
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć to zamówienie?');">
+                                Usuń
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

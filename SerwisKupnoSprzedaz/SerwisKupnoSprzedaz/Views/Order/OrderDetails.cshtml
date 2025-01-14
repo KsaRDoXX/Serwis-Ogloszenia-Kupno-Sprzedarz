@@ -1,0 +1,16 @@
+﻿@model Order
+
+@{
+    ViewData["Title"] = "Zamówienie";
+}
+
+<div>
+    <h3>Dane Zamówienia</h3>
+    <p><strong>Zamówiona rzecz:</strong> @Model.Announcement.Name</p>
+    <p><strong>Data Zamówienia:</strong> @Model.OrderDate</p>
+    <p><strong>Stan zamówienia :</strong> @Model.OrderState</p>
+    <p><strong>Typ przesyłki :</strong> @Model.DeliveryType</p>
+</div>
+
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edytuj zamówienie</a>
+
